@@ -4,8 +4,18 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.*;
 
 public class HelloApplication extends Application {
     @Override
@@ -15,11 +25,96 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+        
+        
+        
+        
     }
 
-    public static void main(String[] args) {
-        
-        launch();
+    private Connection connect() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:music.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    public void insert(int trackNum, String trackName, String artist, String album, int year) {
+
+        String sql = "INSERT INTO songs(trackNum, artist, trackName, album, year) VALUES(?,?,?,?,?)";
+        String sql2 = "DELETE FROM songs";
+        String sql3 = "create table songs (trackNum integer, trackName string, artist string, album string, year integer)";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            Statement statement = conn.createStatement();
+            statement.setQueryTimeout(30);
+            pstmt.setInt(1, trackNum);
+            pstmt.setString(2, trackName);
+            pstmt.setString(3, artist);
+            pstmt.setString(4, album);
+            pstmt.setInt(5, year);
+            ResultSet rs = statement.executeQuery("select * from songs");
+            while (rs.next()) {
+                // read the result set
+                System.out.println("Artist = " + rs.getString("artist"));
+                System.out.println("TrackName = " + rs.getString("trackName"));
+                System.out.println("Album = " + rs.getString("album"));
+                System.out.println("Year = " + rs.getInt("year"));
+            }
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    
+
+    @Override
+    public String toString() {
+        return "Output{" +
+                "numFiles=" + numFiles +
+                ", numDirectories=" + numDirectories +
+                '}';
+    }
+
+    private int numFiles;
+    private int numDirectories;
+
+    int track = 1;
+    
+    //Scans input file recursively and using tag data from each file to populate an SQLite database
+    private void scanAndPopulate(File file) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
+        HelloApplication app = new HelloApplication();
+        if (file.isFile()) {
+            //System.out.println(file.getAbsolutePath());
+            AudioFile audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
+            Tag tag = audioFile.getTag();
+
+            for (int i = 1; i < 2; i++) {
+                app.insert(track, tag.getFirst(FieldKey.TITLE), tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM), Integer.parseInt(tag.getFirst(FieldKey.YEAR)));
+            }
+            track++;
+            numFiles++;
+        } else {
+            numDirectories++;
+            File[] files = file.listFiles();
+            for (File otherFile : files) {
+                scanAndPopulate(otherFile);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
+        HelloApplication app = new HelloApplication();
+
+        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\Tunes\\TT-WTT"));
+        System.out.println(app);
     }
     
 }
