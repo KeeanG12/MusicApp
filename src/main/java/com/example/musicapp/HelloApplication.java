@@ -111,10 +111,12 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
-        HelloApplication app = new HelloApplication();
-
-        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\Tunes\\TT-WTT"));
-        System.out.println(app);
+//        HelloApplication app = new HelloApplication();
+//
+//        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\Tunes\\TT-WTT"));
+//        System.out.println(app);
+        
+        launch();
     }
     
 }

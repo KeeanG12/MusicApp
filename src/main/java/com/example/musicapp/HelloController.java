@@ -2,13 +2,20 @@ package com.example.musicapp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.net.URISyntaxException;
 
 public class HelloController {
-    @FXML
-    private Label welcomeText;
+    
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void onHelloButtonClick() throws URISyntaxException {
+        String path = "Stronger.mp3";
+        
+        Media sound = new Media(getClass().getResource("/Stronger.mp3").toURI().toString());
+        MediaPlayer player = new MediaPlayer(sound);
+        player.play();
     }
 }
