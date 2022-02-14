@@ -102,12 +102,24 @@ public class HelloApplication extends Application {
      * @throws ReadOnlyFileException
      * @throws IOException
      */
-    private void scanAndPopulate(File file) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
+    private void scanAndPopulate(File file)  {
         HelloApplication app = new HelloApplication();
         //Checks if it is a file
         if (file.isFile()) {
-            //System.out.println(file.getAbsolutePath());
-            AudioFile audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
+            AudioFile audioFile = null;
+            try {
+                audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
+            } catch (CannotReadException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TagException e) {
+                e.printStackTrace();
+            } catch (ReadOnlyFileException e) {
+                e.printStackTrace();
+            } catch (InvalidAudioFrameException e) {
+                e.printStackTrace();
+            }
             Tag tag = audioFile.getTag();
 
             //Uses the insert method to insert each files tag data into SQLite DB
@@ -125,13 +137,13 @@ public class HelloApplication extends Application {
         }
     }
 
-    public static void main(String[] args) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
-//        HelloApplication app = new HelloApplication();
-//
-//        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
-//        System.out.println(app);
-        
-        launch();
+    public static void main(String[] args)  {
+        HelloApplication app = new HelloApplication();
+
+        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
+        System.out.println(app);
+//        
+//         launch();
     }
     
 }
