@@ -46,10 +46,13 @@ public class HelloApplication extends Application {
     public void insert(int trackNum, String trackName, String artist, String album, int year) {
 
         String sql = "INSERT INTO songs(trackNum, artist, trackName, album, year) VALUES(?,?,?,?,?)";
+        
+        //Used for testing
         String sql2 = "DELETE FROM songs";
-        String sql3 = "create table songs (trackNum integer, trackName string, artist string, album string, year integer)";
+        String sql3 = "CREATE TABLE if not exists songs (trackNum integer, trackName string, artist string, album string, year integer)";
 
         try (Connection conn = this.connect();
+             //Uses prepared statement to pass input parameters
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             Statement statement = conn.createStatement();
             statement.setQueryTimeout(30);
@@ -75,6 +78,7 @@ public class HelloApplication extends Application {
 
     
 
+    //toString method for debugging
     @Override
     public String toString() {
         return "Output{" +
@@ -83,19 +87,30 @@ public class HelloApplication extends Application {
                 '}';
     }
 
+    //Variables for Number of files, Number of directories and track number
     private int numFiles;
     private int numDirectories;
 
     int track = 1;
-    
-    //Scans input file recursively and using tag data from each file to populate an SQLite database
+
+    /**
+     * Scans file recursivley and populates SQLite DB will each files tag data
+     * @param file
+     * @throws CannotReadException
+     * @throws TagException
+     * @throws InvalidAudioFrameException
+     * @throws ReadOnlyFileException
+     * @throws IOException
+     */
     private void scanAndPopulate(File file) throws CannotReadException, TagException, InvalidAudioFrameException, ReadOnlyFileException, IOException {
         HelloApplication app = new HelloApplication();
+        //Checks if it is a file
         if (file.isFile()) {
             //System.out.println(file.getAbsolutePath());
             AudioFile audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
             Tag tag = audioFile.getTag();
 
+            //Uses the insert method to insert each files tag data into SQLite DB
             for (int i = 1; i < 2; i++) {
                 app.insert(track, tag.getFirst(FieldKey.TITLE), tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM), Integer.parseInt(tag.getFirst(FieldKey.YEAR)));
             }
