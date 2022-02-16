@@ -16,6 +16,7 @@ import org.jaudiotagger.tag.TagException;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class HelloApplication extends Application {
     @Override
@@ -148,13 +149,13 @@ public class HelloApplication extends Application {
     public static void main(String[] args)  {
 //        HelloApplication app = new HelloApplication();
 //        
-//        Database music = Database.getInstance();
-//        music.insertArtist(5, "Jay-Z");
+        Database music = Database.getInstance();
+        music.insertArtist(5, "Jay-Z");
 
 //        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
 //        System.out.println(app);
 //        
-         launch();
+//         launch();
     }
     
 }
