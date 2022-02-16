@@ -46,29 +46,37 @@ public class HelloApplication extends Application {
     public void insert(int trackNum, String trackName, String artist, String album, int year) {
 
         String sql = "INSERT INTO songs(trackNum, artist, trackName, album, year) VALUES(?,?,?,?,?)";
+        String sql2 = "SELECT * FROM artist";
         
-        //Used for testing
-        String sql2 = "DELETE FROM songs";
-        String sql3 = "CREATE TABLE if not exists songs (trackNum integer, trackName string, artist string, album string, year integer)";
+        String insert = "Insert into artist(artistID, name) VALUES (1, 'Kanye West')";
 
+//        Insert into artist(artistID, name) VALUES (1, 'Kanye West');
+//        Insert into artist(artistID, name) VALUES (2, 'Dave');
+//        Insert into artist(artistID, name) VALUES (3, 'Jay-Z');
+//        Insert into artist(artistID, name) VALUES (4, 'Isaiah Rashad');
+//        Insert into artist(artistID, name) VALUES (5, 'Travis Scott');
+        
+
+        
         try (Connection conn = this.connect();
              //Uses prepared statement to pass input parameters
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            Statement statement = conn.createStatement();
-            statement.setQueryTimeout(30);
-            pstmt.setInt(1, trackNum);
-            pstmt.setString(2, trackName);
-            pstmt.setString(3, artist);
-            pstmt.setString(4, album);
-            pstmt.setInt(5, year);
-            ResultSet rs = statement.executeQuery("select * from songs");
-            while (rs.next()) {
-                // read the result set
-                System.out.println("Artist = " + rs.getString("artist"));
-                System.out.println("TrackName = " + rs.getString("trackName"));
-                System.out.println("Album = " + rs.getString("album"));
-                System.out.println("Year = " + rs.getInt("year"));
-            }
+             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+//            Statement statement = conn.createStatement();
+//            statement.setQueryTimeout(30);
+            
+//            pstmt.setInt(1, trackNum);
+//            pstmt.setString(2, trackName);
+//            pstmt.setString(3, artist);
+//            pstmt.setString(4, album);
+//            pstmt.setInt(5, year);
+//            ResultSet rs = statement.executeQuery("select * from songs");
+//            while (rs.next()) {
+//                // read the result set
+//                System.out.println("Artist = " + rs.getString("artist"));
+//                System.out.println("TrackName = " + rs.getString("trackName"));
+//                System.out.println("Album = " + rs.getString("album"));
+//                System.out.println("Year = " + rs.getInt("year"));
+//            }
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -138,12 +146,15 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args)  {
-        HelloApplication app = new HelloApplication();
-
-        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
-        System.out.println(app);
+//        HelloApplication app = new HelloApplication();
 //        
-//         launch();
+//        Database music = Database.getInstance();
+//        music.insertArtist(5, "Jay-Z");
+
+//        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
+//        System.out.println(app);
+//        
+         launch();
     }
     
 }
