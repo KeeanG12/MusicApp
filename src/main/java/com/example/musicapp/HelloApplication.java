@@ -130,10 +130,14 @@ public class HelloApplication extends Application {
                 e.printStackTrace();
             }
             Tag tag = audioFile.getTag();
+            
 
             //Uses the insert method to insert each files tag data into SQLite DB
             for (int i = 1; i < 2; i++) {
-                music.insert(id, tag.getFirst(FieldKey.ARTIST), id, tag.getFirst(FieldKey.ALBUM), Integer.parseInt(tag.getFirst(FieldKey.YEAR)), id, tag.getFirst(FieldKey.TITLE));
+                
+                
+                
+                        
             }
             id++;
             numFiles++;

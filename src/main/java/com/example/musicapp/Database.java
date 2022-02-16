@@ -42,9 +42,8 @@ public class Database {
         }
     }
 
-    public void insert(int artistID, String artistName, int albumID, String albumName, int produced, int songID, String songName) {
+    public void insertArtist(int artistID, String artistName) {
         String artist = "INSERT INTO artist(artistID, name) VALUES(?,?)";
-        String album = "INSERT INTO album(albumID, name, produced, artistID) VALUES(?,?,?,?)";
         String song = "INSERT INTO song(songID, name, albumID) VALUES(?,?,?)";
 
         String insert = "Insert into artist(artistID, name) VALUES (1, 'Kanye West')";
@@ -52,7 +51,7 @@ public class Database {
              //Uses prepared statement to pass input parameters
              PreparedStatement statement = conn.prepareStatement(artist)) {
             Statement statement1 = conn.createStatement();
-            
+
             statement.setInt(1, artistID);
             statement.setString(2, artistName);
             ResultSet rs = statement1.executeQuery("select * from artist");
@@ -65,50 +64,61 @@ public class Database {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-        try (Connection conn = this.connect();
-             //Uses prepared statement to pass input parameters
-             PreparedStatement statement = conn.prepareStatement(album)) {
-            Statement statement1 = conn.createStatement();
-
-            statement.setInt(1, albumID);
-            statement.setString(2, albumName);
-            statement.setInt(3, produced);
-            statement.setInt(4, artistID);
-            ResultSet rs = statement1.executeQuery("select * from album");
-            statement.executeUpdate();
-            while (rs.next()) {
-                // read the result set
-                System.out.println("AlbumID = " + rs.getInt("albumID"));
-                System.out.println("Name = " + rs.getString("name"));
-                System.out.println("Produced = " + rs.getInt("produced"));
-                System.out.println("ArtistID = " + rs.getInt("artist"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        try (Connection conn = this.connect();
-             //Uses prepared statement to pass input parameters
-             PreparedStatement statement = conn.prepareStatement(song)) {
-            Statement statement1 = conn.createStatement();
-
-            statement.setInt(1, songID);
-            statement.setString(2, songName);
-            statement.setInt(3, albumID);
-            ResultSet rs = statement1.executeQuery("select * from song");
-            statement.executeUpdate();
-            while (rs.next()) {
-                // read the result set
-                System.out.println("SongID = " + rs.getInt("albumID"));
-                System.out.println("Name = " + rs.getString("name"));
-                System.out.println("AlbumID = " + rs.getInt("album"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
     }
+
+
+        public void insertAlbum (int artistID, int albumID, String albumName, int produced) {
+        
+            String album = "INSERT INTO album(albumID, name, produced, artistID) VALUES(?,?,?,?)";
+
+            try (Connection conn = this.connect();
+                 //Uses prepared statement to pass input parameters
+                 PreparedStatement statement = conn.prepareStatement(album)) {
+                Statement statement1 = conn.createStatement();
+
+                statement.setInt(1, albumID);
+                statement.setString(2, albumName);
+                statement.setInt(3, produced);
+                statement.setInt(4, artistID);
+                ResultSet rs = statement1.executeQuery("select * from album");
+                statement.executeUpdate();
+                while (rs.next()) {
+                    // read the result set
+                    System.out.println("AlbumID = " + rs.getInt("albumID"));
+                    System.out.println("Name = " + rs.getString("name"));
+                    System.out.println("Produced = " + rs.getInt("produced"));
+                    System.out.println("ArtistID = " + rs.getInt("artist"));
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        public void insertSong(int albumID, int songID, String songName) {
+
+            String song = "INSERT INTO song(songID, name, albumID) VALUES(?,?,?)";
+            
+            try (Connection conn = this.connect();
+                 //Uses prepared statement to pass input parameters
+                 PreparedStatement statement = conn.prepareStatement(song)) {
+                Statement statement1 = conn.createStatement();
+
+                statement.setInt(1, songID);
+                statement.setString(2, songName);
+                statement.setInt(3, albumID);
+                ResultSet rs = statement1.executeQuery("select * from song");
+                statement.executeUpdate();
+                while (rs.next()) {
+                    // read the result set
+                    System.out.println("SongID = " + rs.getInt("albumID"));
+                    System.out.println("Name = " + rs.getString("name"));
+                    System.out.println("AlbumID = " + rs.getInt("album"));
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
     
     public static Database getInstance() {
         if (music == null)
