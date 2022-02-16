@@ -100,7 +100,7 @@ public class HelloApplication extends Application {
     private int numFiles;
     private int numDirectories;
 
-    int track = 1;
+    int id = 1;
 
     /**
      * Scans file recursivley and populates SQLite DB will each files tag data
@@ -112,7 +112,7 @@ public class HelloApplication extends Application {
      * @throws IOException
      */
     private void scanAndPopulate(File file)  {
-        HelloApplication app = new HelloApplication();
+        Database music = Database.getInstance();
         //Checks if it is a file
         if (file.isFile()) {
             AudioFile audioFile = null;
@@ -133,9 +133,9 @@ public class HelloApplication extends Application {
 
             //Uses the insert method to insert each files tag data into SQLite DB
             for (int i = 1; i < 2; i++) {
-                app.insert(track, tag.getFirst(FieldKey.TITLE), tag.getFirst(FieldKey.ARTIST), tag.getFirst(FieldKey.ALBUM), Integer.parseInt(tag.getFirst(FieldKey.YEAR)));
+                music.insert(id, tag.getFirst(FieldKey.ARTIST), id, tag.getFirst(FieldKey.ALBUM), Integer.parseInt(tag.getFirst(FieldKey.YEAR)), id, tag.getFirst(FieldKey.TITLE));
             }
-            track++;
+            id++;
             numFiles++;
         } else {
             numDirectories++;
@@ -147,12 +147,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args)  {
-//        HelloApplication app = new HelloApplication();
+        HelloApplication app = new HelloApplication();
 //        
         Database music = Database.getInstance();
-        music.insertArtist(5, "Jay-Z");
 
-//        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
+        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
 //        System.out.println(app);
 //        
 //         launch();
