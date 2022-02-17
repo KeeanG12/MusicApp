@@ -30,6 +30,7 @@ public class HelloApplication extends Application {
         
         
         
+        
     }
 
     private Connection connect() {
@@ -44,46 +45,46 @@ public class HelloApplication extends Application {
         return conn;
     }
 
-    public void insert(int trackNum, String trackName, String artist, String album, int year) {
-
-        String sql = "INSERT INTO songs(trackNum, artist, trackName, album, year) VALUES(?,?,?,?,?)";
-        String sql2 = "SELECT * FROM artist";
-        
-        String insert = "Insert into artist(artistID, name) VALUES (1, 'Kanye West')";
-
-//        Insert into artist(artistID, name) VALUES (1, 'Kanye West');
-//        Insert into artist(artistID, name) VALUES (2, 'Dave');
-//        Insert into artist(artistID, name) VALUES (3, 'Jay-Z');
-//        Insert into artist(artistID, name) VALUES (4, 'Isaiah Rashad');
-//        Insert into artist(artistID, name) VALUES (5, 'Travis Scott');
-        
-
-        
-        try (Connection conn = this.connect();
-             //Uses prepared statement to pass input parameters
-             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-//            Statement statement = conn.createStatement();
-//            statement.setQueryTimeout(30);
-            
-//            pstmt.setInt(1, trackNum);
-//            pstmt.setString(2, trackName);
-//            pstmt.setString(3, artist);
-//            pstmt.setString(4, album);
-//            pstmt.setInt(5, year);
-//            ResultSet rs = statement.executeQuery("select * from songs");
-//            while (rs.next()) {
-//                // read the result set
-//                System.out.println("Artist = " + rs.getString("artist"));
-//                System.out.println("TrackName = " + rs.getString("trackName"));
-//                System.out.println("Album = " + rs.getString("album"));
-//                System.out.println("Year = " + rs.getInt("year"));
-//            }
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
+//    public void insert(int trackNum, String trackName, String artist, String album, int year) {
+//
+//        String sql = "INSERT INTO songs(trackNum, artist, trackName, album, year) VALUES(?,?,?,?,?)";
+//        String sql2 = "SELECT * FROM artist";
+//        
+//        String insert = "Insert into artist(artistID, name) VALUES (1, 'Kanye West')";
+//
+////        Insert into artist(artistID, name) VALUES (1, 'Kanye West');
+////        Insert into artist(artistID, name) VALUES (2, 'Dave');
+////        Insert into artist(artistID, name) VALUES (3, 'Jay-Z');
+////        Insert into artist(artistID, name) VALUES (4, 'Isaiah Rashad');
+////        Insert into artist(artistID, name) VALUES (5, 'Travis Scott');
+//        
+//
+//        
+//        try (Connection conn = this.connect();
+//             //Uses prepared statement to pass input parameters
+//             PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+////            Statement statement = conn.createStatement();
+////            statement.setQueryTimeout(30);
+//            
+////            pstmt.setInt(1, trackNum);
+////            pstmt.setString(2, trackName);
+////            pstmt.setString(3, artist);
+////            pstmt.setString(4, album);
+////            pstmt.setInt(5, year);
+////            ResultSet rs = statement.executeQuery("select * from songs");
+////            while (rs.next()) {
+////                // read the result set
+////                System.out.println("Artist = " + rs.getString("artist"));
+////                System.out.println("TrackName = " + rs.getString("trackName"));
+////                System.out.println("Album = " + rs.getString("album"));
+////                System.out.println("Year = " + rs.getInt("year"));
+////            }
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//    }
 
     
 
@@ -134,10 +135,6 @@ public class HelloApplication extends Application {
 
             //Uses the insert method to insert each files tag data into SQLite DB
             for (int i = 1; i < 2; i++) {
-                
-                
-                
-                        
             }
             id++;
             numFiles++;
@@ -151,14 +148,14 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args)  {
-        HelloApplication app = new HelloApplication();
-//        
-        Database music = Database.getInstance();
-
-        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
+//        HelloApplication app = new HelloApplication();
+////        
+//        Database music = Database.getInstance();
+//
+//        app.scanAndPopulate(new File("D:\\UniWork\\Third Year\\Major Project\\MusicApp\\src\\main\\resources\\Tunes\\TT-WTT"));
 //        System.out.println(app);
 //        
-//         launch();
+         launch();
     }
     
 }

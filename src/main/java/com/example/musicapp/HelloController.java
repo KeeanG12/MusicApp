@@ -9,12 +9,13 @@ import java.net.URISyntaxException;
 public class HelloController {
     
 
+    MediaPlayer player;
     @FXML
     protected void onHelloButtonClick() throws URISyntaxException {
-        String path = "Tunes/Stronger.mp3";
+        String path = "Stronger";
         //Uses JavaFX-Media to play a MP3 file when button is clicked
-        Media sound = new Media(getClass().getResource("/Tunes/Free Lunch.mp3").toURI().toString());
-        MediaPlayer player = new MediaPlayer(sound);
+        Media sound = new Media(getClass().getResource("/Tunes/" + path + ".mp3").toURI().toString());
+        player = new MediaPlayer(sound);
         player.play();
     }
 }
