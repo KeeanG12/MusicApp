@@ -10,6 +10,21 @@ public class HelloController {
     
 
     MediaPlayer player;
+
+    private void playPauseClicked() {
+        MediaPlayer.Status currentStatus = player.getStatus();
+
+        if(currentStatus == MediaPlayer.Status.PLAYING)
+            player.pause();
+        else if(currentStatus == MediaPlayer.Status.PAUSED || currentStatus == MediaPlayer.Status.STOPPED) {
+            System.out.println("Player will start at: " + player.getCurrentTime());
+            player.play();
+        }
+    }
+    
+    
+    
+    
     @FXML
     protected void onHelloButtonClick() throws URISyntaxException {
         String path = "Stronger";
