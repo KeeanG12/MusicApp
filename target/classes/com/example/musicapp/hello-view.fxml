@@ -1,16 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.musicapp.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.musicapp.HelloController">
+   <children>
+      <HBox alignment="CENTER_LEFT" layoutX="21.0" layoutY="668.0" prefHeight="91.0" prefWidth="1200.0" spacing="30.0" styleClass="control-bar-colour" stylesheets="@styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="35.0" prefWidth="50.0" styleClass="previous-button" stylesheets="@styles.css" text="Previous" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="35.0" prefWidth="50.0" styleClass="play-button" stylesheets="@styles.css" text="Play">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="35.0" prefWidth="50.0" styleClass="next-button" stylesheets="@styles.css" text="Next" />
+            <VBox alignment="CENTER" prefHeight="91.0" prefWidth="844.0">
+               <children>
+                  <Label text="Now Playing: Song Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Slider prefHeight="45.0" prefWidth="844.0" stylesheets="@styles.css" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </HBox>
+      <BorderPane prefHeight="711.0" prefWidth="1200.0" styleClass="main-background-colour" stylesheets="@styles.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <Pane prefHeight="502.0" prefWidth="409.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" layoutY="60.0" prefHeight="382.0" prefWidth="254.0" spacing="20.0" styleClass="menu-bar" stylesheets="@styles.css">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="70.0" prefWidth="150.0" styleClass="songs-button" stylesheets="@styles.css" text="Songs" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="70.0" prefWidth="150.0" styleClass="playlist-button" stylesheets="@styles.css" text="Playlists" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="70.0" prefWidth="150.0" styleClass="settings-button" stylesheets="@styles.css" text="Settings" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </left>
+         <top>
+            <ImageView fitHeight="209.0" fitWidth="356.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+               <image>
+                  <Image url="@../../../Icons/KG%20Logo.png" />
+               </image>
+               <BorderPane.margin>
+                  <Insets left="20.0" />
+               </BorderPane.margin>
+            </ImageView>
+         </top>
+         <center>
+            <TableView prefHeight="573.0" prefWidth="791.0" styleClass="table" stylesheets="@styles.css" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="208.0" text="Song" />
+                <TableColumn prefWidth="228.0" text="Artist" />
+                  <TableColumn prefWidth="219.0" text="Album" />
+                  <TableColumn prefWidth="68.0" text="Produced" />
+                  <TableColumn prefWidth="68.0" text="Duration" />
+              </columns>
+            </TableView>
+         </center>
+         <right>
+            <Pane prefHeight="502.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>

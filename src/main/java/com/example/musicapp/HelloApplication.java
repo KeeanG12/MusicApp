@@ -23,14 +23,9 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
-        stage.setTitle("Hello!");
+        stage.setTitle("KG Music Player");
         stage.setScene(scene);
         stage.show();
-        
-        
-        
-        
-        
     }
 
     private Connection connect() {
@@ -85,67 +80,6 @@ public class HelloApplication extends Application {
 //        }
 //
 //    }
-
-    
-
-    //toString method for debugging
-    @Override
-    public String toString() {
-        return "Output{" +
-                "numFiles=" + numFiles +
-                ", numDirectories=" + numDirectories +
-                '}';
-    }
-
-    //Variables for Number of files, Number of directories and track number
-    private int numFiles;
-    private int numDirectories;
-
-    int id = 1;
-
-    /**
-     * Scans file recursivley and populates SQLite DB will each files tag data
-     * @param file
-     * @throws CannotReadException
-     * @throws TagException
-     * @throws InvalidAudioFrameException
-     * @throws ReadOnlyFileException
-     * @throws IOException
-     */
-    private void scanAndPopulate(File file)  {
-        Database music = Database.getInstance();
-        //Checks if it is a file
-        if (file.isFile()) {
-            AudioFile audioFile = null;
-            try {
-                audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
-            } catch (CannotReadException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TagException e) {
-                e.printStackTrace();
-            } catch (ReadOnlyFileException e) {
-                e.printStackTrace();
-            } catch (InvalidAudioFrameException e) {
-                e.printStackTrace();
-            }
-            Tag tag = audioFile.getTag();
-            
-
-            //Uses the insert method to insert each files tag data into SQLite DB
-            for (int i = 1; i < 2; i++) {
-            }
-            id++;
-            numFiles++;
-        } else {
-            numDirectories++;
-            File[] files = file.listFiles();
-            for (File otherFile : files) {
-                scanAndPopulate(otherFile);
-            }
-        }
-    }
 
     public static void main(String[] args)  {
 //        HelloApplication app = new HelloApplication();

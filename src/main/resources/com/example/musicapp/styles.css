@@ -3,7 +3,7 @@
 }
 
 .main-background-colour{
-    -fx-background-color: linear-gradient(to right, #02aab0, #dd2476);
+    -fx-background-color: linear-gradient(to right, #43cea2 , #185a9d);
 }
 
 .menu-bar{
@@ -28,10 +28,19 @@
 
 .settings-button{
     -fx-graphic: url(../../../Icons/Settings.png);
-    -fx-content-display: graphic-only;
+    -fx-content-display: left;
 }
 
 .songs-button{
     -fx-graphic: url(../../../Icons/Song.png);
-    -fx-content-display: graphic-only;
+    -fx-content-display: left;
+}
+
+.playlist-button{
+    -fx-graphic: url(../../../Icons/Album.png);
+    -fx-content-display: left;
+}
+
+.table{
+    -fx-background-color:rgba(0,0,0,0) ;
 }

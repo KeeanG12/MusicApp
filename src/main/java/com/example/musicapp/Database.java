@@ -1,14 +1,24 @@
 package com.example.musicapp;
 
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
+
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 
 public class Database {
 
-    String artist = "Create table if not exists artist(artistID integer primary key, name string)";
+    String artist = "Create table if not exists artist(artistID integer primary key NOT NULL, name string NOT NULL)";
 
-    String album = "Create table if not exists album(albumID integer primary key, name string, produced DATE, artist integer, foreign key (artist) REFERENCES artist (artistID));";
+    String album = "Create table if not exists album(albumID integer primary key NOT NULL, name string NOT NULL, produced DATE, artist integer, foreign key (artist) REFERENCES artist (artistID));";
 
-    String song = "Create table if not exists songs(songID integer primary key, name string, album Integer, Foreign key (album) references album (albumID));";
+    String song = "Create table if not exists songs(songID integer primary key NOT NULL, name string NOT NULL, album Integer, Foreign key (album) references album (albumID));";
     
     private static Database music = null;
     
@@ -119,6 +129,56 @@ public class Database {
             }
 
         }
+
+    //Variables for Number of files, Number of directories and track number
+    private int numFiles;
+    private int numDirectories;
+
+    int id = 1;
+
+    /**
+     * Scans file recursivley and populates SQLite DB will each files tag data
+     * @param file
+     * @throws CannotReadException
+     * @throws TagException
+     * @throws InvalidAudioFrameException
+     * @throws ReadOnlyFileException
+     * @throws IOException
+     */
+    private void scanAndPopulate(File file)  {
+        Database music = Database.getInstance();
+        //Checks if it is a file
+        if (file.isFile()) {
+            AudioFile audioFile = null;
+            try {
+                audioFile = AudioFileIO.read(new File(file.getAbsolutePath()));
+            } catch (CannotReadException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TagException e) {
+                e.printStackTrace();
+            } catch (ReadOnlyFileException e) {
+                e.printStackTrace();
+            } catch (InvalidAudioFrameException e) {
+                e.printStackTrace();
+            }
+            Tag tag = audioFile.getTag();
+
+
+            //Uses the insert method to insert each files tag data into SQLite DB
+            for (int i = 1; i < 2; i++) {
+            }
+            id++;
+            numFiles++;
+        } else {
+            numDirectories++;
+            File[] files = file.listFiles();
+            for (File otherFile : files) {
+                scanAndPopulate(otherFile);
+            }
+        }
+    }
     
     public static Database getInstance() {
         if (music == null)
